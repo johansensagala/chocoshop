@@ -1,0 +1,37 @@
+﻿@page
+@model ChocoShop.Pages.OrderSuccessModel
+@{
+}
+<ol id="orderProcess">
+    <li><span class="step-number">1</span>Choose Item</li>
+    <li><span class="step-number">2</span>Details &amp; Submit</li>
+    <li class="current"><span class="step-number">3</span>Receipt</li>
+</ol>
+<h1>Order Confirmation</h1>
+
+@section scripts{
+<partial name="_ValidationScriptsPartial"></partial>
+<script type="text/javascript">
+    $(function () {
+        var price = parseFloat($("#orderPrice").text()).toFixed(2),
+            total = $("#orderTotal"),
+            orderQty = $("#OrderQuantity");
+        orderQty.on('change', function () {
+            var quantity = parseInt(orderQty.val());
+            if (!quantity || quantity < 1) {
+                orderQty.val(1);
+                quantity = 1;
+            } else if (quantity.toString() !== orderQty.val()) {
+                orderQty.val(quantity);
+            }
+            total.text("Rp" + (price * quantity).toFixed(2));
+        });
+    });
+</script>
+}
+
+<div class="message order-success">
+    <h2>Thank you for your order!</h2>
+    <p>We are processing your order and have sent a confirmation email.
+Thank you for trusting us and enjoy the sweetness!</p>
+</div>
